@@ -30,7 +30,11 @@ class AddBeneficiarySheet extends StatelessWidget {
                   'Add Beneficiary',
                   style: tStyles['black18mid'],
                 ),
-                const Icon(CupertinoIcons.xmark),
+                GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: const Icon(CupertinoIcons.xmark)),
               ],
             ),
           ),

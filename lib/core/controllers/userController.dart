@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:jamal_ed/core/api/api_request.dart';
 import 'package:jamal_ed/core/api/api_routes.dart';
 import 'package:jamal_ed/core/api/keys.dart';
@@ -10,6 +11,7 @@ import 'package:jamal_ed/ui/screens/home/controller.dart';
 class Usercontroller extends GetxController {
   Map? userData;
   String? userId;
+  final box = GetStorage();
 
   Future getUserData() async {
     await ApiRequest(
@@ -19,6 +21,7 @@ class Usercontroller extends GetxController {
       onSuccess: (data, response) {
         userData = data;
         userId = userData![kId];
+        box.write(kUserData, userData);
         if (Get.isRegistered<HomeController>()) {
           Get.find<HomeController>().userData = userData!;
           Get.find<HomeController>().refreshUserData();
@@ -86,5 +89,13 @@ class Usercontroller extends GetxController {
         } else {}
       },
     );
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    userData = box.read(kUserData);
+    userId = userData?[kId];
   }
 }

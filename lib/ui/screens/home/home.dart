@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:jamal_ed/core/api/log.dart';
 import 'package:jamal_ed/core/helpers/ui_helper.dart';
 import 'package:jamal_ed/core/utils/global.dart';
@@ -38,6 +39,7 @@ class HomeScreen extends StatelessWidget {
                             title: const Text('Welcome Back!'),
                             trailing: CupertinoButton(
                               onPressed: () {
+                                GetStorage().erase();
                                 Get.offAllNamed(routeLogin);
                               },
                               padding: EdgeInsets.zero,
@@ -106,7 +108,10 @@ class HomeScreen extends StatelessWidget {
                                             'You can add maximum of 5 beneficiaries',
                                       );
                                     }
-                                    Get.bottomSheet(AddBeneficiarySheet());
+                                    Get.bottomSheet(
+                                      AddBeneficiarySheet(),
+                                      isScrollControlled: true,
+                                    );
                                   },
                                   minSize: 0,
                                   padding: EdgeInsets.only(
